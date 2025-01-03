@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 
+import { jwtCheck, jwtParse } from "./middlewares/auth";
 import userBookingRouter from "./routes/UserBookingsRoutes";
 import userRouter from "./routes/UserRoutes";
 
@@ -18,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/restaurant_booking', {
 
 
 app.use('/api/user', userRouter)
-app.use('/api/bookings', userBookingRouter);
+app.use('/api/bookings', jwtCheck, jwtParse, userBookingRouter);
 
 
 // Start the server
